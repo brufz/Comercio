@@ -4,6 +4,7 @@ import com.comercio.comercioEletronico.exceptions.IdInvalidoException;
 import com.comercio.comercioEletronico.model.Categoria;
 import com.comercio.comercioEletronico.model.dto.CategoriaResponseDto;
 import com.comercio.comercioEletronico.service.CategoriaService;
+import com.comercio.comercioEletronico.service.interfaces.ICategoria;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,7 @@ import java.util.Optional;
 public class CategoriaController {
 
     @Autowired
-    CategoriaService categoriaService;
+    ICategoria categoriaService;
 
     @GetMapping
     public ResponseEntity<CategoriaResponseDto> buscarTodasCategorias(){

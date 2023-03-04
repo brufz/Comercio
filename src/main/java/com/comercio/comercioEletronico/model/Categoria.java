@@ -1,5 +1,6 @@
 package com.comercio.comercioEletronico.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -28,5 +29,6 @@ public class Categoria implements Serializable {
     @NotBlank
     private String descricao;
     @OneToMany(mappedBy = "categoria")
+    @JsonIgnore
     private List<Produto> produtos;
 }

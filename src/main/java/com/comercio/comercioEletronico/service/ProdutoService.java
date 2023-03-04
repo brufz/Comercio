@@ -1,6 +1,7 @@
 package com.comercio.comercioEletronico.service;
 
 import com.comercio.comercioEletronico.exceptions.IdInvalidoException;
+import com.comercio.comercioEletronico.model.Categoria;
 import com.comercio.comercioEletronico.model.Produto;
 import com.comercio.comercioEletronico.repository.ProdutoRepository;
 import com.comercio.comercioEletronico.service.interfaces.IProduto;
@@ -18,26 +19,38 @@ public class ProdutoService implements IProduto {
 
     @Override
     public List<Produto> buscarTodosProdutos() {
-        return null;
+        return produtoRepository.findAll();
     }
 
     @Override
     public Optional<Produto> buscarProdutoPorId(Long id) throws IdInvalidoException {
-        return Optional.empty();
+        validarId(id);
+        Optional<Produto> produto = produtoRepository.findById(id);
+        return produto;
     }
 
     @Override
     public Produto criarProduto(Produto produto) {
-        return null;
+        Produto novoProduto = produtoRepository.save(produto);
+        return novoProduto;
     }
 
     @Override
     public void deletarProduto(Long id) throws IdInvalidoException {
-
+        validarId(id);
+        produtoRepository.deleteById(id);
     }
 
     @Override
     public Produto editarProduto(Produto produto) {
-        return null;
+        Produto save = produtoRepository.save(produto);
+        return save;
+    }
+
+    public void validarId(Long id) throws IdInvalidoException {
+        if (!produtoRepository.existsById(id)) {
+            throw new IdInvalidoException("Id não encontrado no banco de dados");
+        }
     }
 }
+
