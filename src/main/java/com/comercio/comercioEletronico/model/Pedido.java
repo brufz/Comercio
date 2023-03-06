@@ -2,6 +2,7 @@ package com.comercio.comercioEletronico.model;
 
 import com.comercio.comercioEletronico.model.enuns.StatusEnvio;
 import com.comercio.comercioEletronico.model.enuns.StatusPagamento;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -43,6 +44,7 @@ public class Pedido implements Serializable {
 
     private StatusEnvio statusEnvio;
     @NotNull
+    @JsonFormat(pattern="dd-MM-yyyy")
     private Date dataPedido;
     @NotNull
     private Double valorTotal;
