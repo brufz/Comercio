@@ -25,4 +25,16 @@ public class DetalheErro {
         this.mensagem = errorEnum.getNomeCodigo();
         this.detalhes = errorEnum.getMensagemErroDetalhada();
     }
+
+    public DetalheErro(ErrorEnum errorEnum, String detalhes) {
+        this.codigo = errorEnum.getCodigoErro();
+        this.mensagem = errorEnum.getNomeCodigo();
+        this.detalhes = detalhes;
+    }
+
+    public DetalheErro(ErrorEnum errorEnum, String detalhes, String erro) {
+        this.codigo = errorEnum.getCodigoErro();
+        this.mensagem = errorEnum.getNomeCodigo();
+        this.detalhes = detalhes + " : " + erro;
+    }
 }

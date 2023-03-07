@@ -9,7 +9,8 @@ import static org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE;
 @Getter
 public enum ErrorEnum {
 
-    TEL_FAVORITOS_400(BAD_REQUEST, BAD_REQUEST.name(), "400", "Requisição Invalida"),
+    COMERCIO_400(BAD_REQUEST, BAD_REQUEST.name(), "400", "Requisição Invalida"),
+    COMERCIO_404(NOT_FOUND, NOT_FOUND.name(), "404", "O recurso solicitado não existe ou não foi implementado"),
     TEL_FAVORITOS_400_001(BAD_REQUEST, BAD_REQUEST.name(), "400001", "Campo não informado"),
     TEL_FAVORITOS_400_002(BAD_REQUEST, BAD_REQUEST.name(), "400002", "Campo precisa ser maior que X e menor que Y"),
     TEL_FAVORITOS_400_INVALID_UUID(BAD_REQUEST, BAD_REQUEST.name(), "400003", "Valor do campo não é um UUID válido"),
