@@ -1,6 +1,7 @@
 package com.comercio.comercioEletronico.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -18,6 +19,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "pedidos"})
+
 public class Cliente implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -35,7 +38,6 @@ public class Cliente implements Serializable {
     @NotBlank
     private String senha;
     @OneToMany(mappedBy = "cliente")
-    @JsonIgnore
     private List<Pedido> pedidos;
 
 

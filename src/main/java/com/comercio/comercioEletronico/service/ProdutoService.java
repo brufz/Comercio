@@ -3,6 +3,7 @@ package com.comercio.comercioEletronico.service;
 import com.comercio.comercioEletronico.exceptions.IdInvalidoException;
 import com.comercio.comercioEletronico.model.Categoria;
 import com.comercio.comercioEletronico.model.Produto;
+import com.comercio.comercioEletronico.repository.CategoriaRepository;
 import com.comercio.comercioEletronico.repository.ProdutoRepository;
 import com.comercio.comercioEletronico.service.interfaces.IProduto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class ProdutoService implements IProduto {
 
     @Autowired
     ProdutoRepository produtoRepository;
+    
+    @Autowired
+    CategoriaRepository categoriaRepository;
 
     @Override
     public List<Produto> buscarTodosProdutos() {
@@ -32,6 +36,8 @@ public class ProdutoService implements IProduto {
     @Override
     public Produto criarProduto(Produto produto) {
         Produto novoProduto = produtoRepository.save(produto);
+        Optional<Categoria> categoria = categoriaRepository.findById(produto.getCategoria().getId());
+        novoProduto.setCategoria(categoria.get());
         return novoProduto;
     }
 

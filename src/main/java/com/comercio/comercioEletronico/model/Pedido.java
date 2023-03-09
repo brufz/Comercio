@@ -3,6 +3,7 @@ package com.comercio.comercioEletronico.model;
 import com.comercio.comercioEletronico.model.enuns.StatusEnvio;
 import com.comercio.comercioEletronico.model.enuns.StatusPagamento;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -27,16 +28,18 @@ public class Pedido implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "pedidos_produtos",
             joinColumns = @JoinColumn(name = "pedido_id"),
             inverseJoinColumns = @JoinColumn(name = "produto_id")
     )
     private List<Produto> produtos;
+    @NotNull
+    private List<Integer> quantidadeItensPedidos;
     @Embedded
     private Endereco enderecoEntrega;
 
