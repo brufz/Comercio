@@ -2,8 +2,6 @@ package com.comercio.comercioEletronico.exceptions;
 
 import com.comercio.comercioEletronico.exceptions.enuns.ErrorEnum;
 import jakarta.validation.ConstraintViolationException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -39,7 +37,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleHttpMessageNotWritable(HttpMessageNotWritableException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         String erro = "Erro ao realizar saida de JSON";
         ApiErroResponse apiErroResponse = new ApiErroResponse();
-        apiErroResponse.getErros().add(new DetalheErro(ErrorEnum.TEL_FAVORITOS_500, ErrorEnum.TEL_FAVORITOS_500.getMensagemErroDetalhada(), erro));
+        apiErroResponse.getErros().add(new DetalheErro(ErrorEnum.COMERCIO_500, ErrorEnum.COMERCIO_500.getMensagemErroDetalhada(), erro));
         return respostaErro(apiErroResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -83,8 +81,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleException(Exception ex) {
         ApiErroResponse apiErroResponse = new ApiErroResponse();
         String erro = "Ocorreu um erro interno no servidor: " + ex.getMessage();
-        apiErroResponse.getErros().add(new DetalheErro(ErrorEnum.TEL_FAVORITOS_500, ErrorEnum.TEL_FAVORITOS_500.getMensagemErroDetalhada(), erro));
+        apiErroResponse.getErros().add(new DetalheErro(ErrorEnum.COMERCIO_500, ErrorEnum.COMERCIO_500.getMensagemErroDetalhada(), erro));
         return respostaErro(apiErroResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(EstoqueException.class)
+    public ResponseEntity<Object> handleEstoqueException(EstoqueException exception){
+        ApiErroResponse apiErroResponse = new ApiErroResponse();
+        apiErroResponse.getErros().add(new DetalheErro(ErrorEnum.COMERCIO_422));
+        return respostaErro(apiErroResponse, ErrorEnum.COMERCIO_422.getCodigoRetorno());
     }
 
 

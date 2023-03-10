@@ -45,7 +45,7 @@ public class Produto implements Serializable {
     @Column(name = "preco")
     private Double preco;
     @NotNull
-    @Column(name = "quantidade_estoque", length = 255)
+    @Column(name = "quantidade_estoque")
     private Integer quantidadeEstoque;
     @Column(name = "imagem", length = 255)
     private String imagem;

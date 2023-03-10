@@ -1,6 +1,8 @@
 package com.comercio.comercioEletronico.service;
 
+import com.comercio.comercioEletronico.exceptions.EstoqueException;
 import com.comercio.comercioEletronico.exceptions.IdInvalidoException;
+import com.comercio.comercioEletronico.exceptions.QuantidadeItensInvalidoException;
 import com.comercio.comercioEletronico.model.Cliente;
 import com.comercio.comercioEletronico.model.Pedido;
 import com.comercio.comercioEletronico.model.Produto;
@@ -40,14 +42,22 @@ public class PedidoService implements IPedido {
     }
 
     @Override
-    public Pedido criarPedido(Pedido pedido) {
+    public Pedido criarPedido(Pedido pedido) throws QuantidadeItensInvalidoException, EstoqueException {
+        validarSeQuantidadeItensPedidosIgualQuantidadeListaProdutos(pedido);
         Optional<Produto> produtoOptional;
         List<Produto> listaProdutos = new ArrayList<>();
+        ProdutoService produtoService = new ProdutoService();
+
         Optional<Cliente> cliente = clienteRepository.findById(pedido.getCliente().getId());
-        for (Produto produto:pedido.getProdutos()) {
-            produtoOptional = produtoRepository.findById(produto.getId());
-            listaProdutos.add(produtoOptional.get());
+        for (int i = 0; i < pedido.getProdutos().size(); i++){
+            Produto produto = pedido.getProdutos().get(i);
+            Optional<Produto> produtoPorId = produtoRepository.findById(produto.getId());
+            listaProdutos.add(produtoPorId.get());
+
+            Integer itemPedido = pedido.getQuantidadeItensPedidos().get(i);
+            produtoService.controleEstoque(produtoPorId.get(),itemPedido);
         }
+
         pedido.setCliente(cliente.get());
         pedido.setProdutos(listaProdutos);
         Pedido novoPedido = pedidoRepository.save(pedido);
@@ -69,6 +79,12 @@ public class PedidoService implements IPedido {
     public void validarId(Long id) throws IdInvalidoException {
         if (!pedidoRepository.existsById(id)) {
             throw new IdInvalidoException("Id não encontrado no banco de dados");
+        }
+    }
+
+    public void validarSeQuantidadeItensPedidosIgualQuantidadeListaProdutos(Pedido pedido) throws QuantidadeItensInvalidoException {
+        if(pedido.getQuantidadeItensPedidos().size() != pedido.getProdutos().size()){
+            throw new QuantidadeItensInvalidoException("Todos os pedidos devem ter uma quantidade");
         }
     }
 }

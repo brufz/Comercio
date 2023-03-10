@@ -15,8 +15,8 @@ public enum ErrorEnum {
     TEL_FAVORITOS_400_002(BAD_REQUEST, BAD_REQUEST.name(), "400002", "Campo precisa ser maior que X e menor que Y"),
     TEL_FAVORITOS_400_INVALID_UUID(BAD_REQUEST, BAD_REQUEST.name(), "400003", "Valor do campo não é um UUID válido"),
     TEL_FAVORITOS_415(UNSUPPORTED_MEDIA_TYPE, UNSUPPORTED_MEDIA_TYPE.name(), "415", "Servidor não suporta tipo de mídia"),
-    TEL_FAVORITOS_422(UNPROCESSABLE_ENTITY, UNPROCESSABLE_ENTITY.name(), "422", "Não foi possível processar a solicitação."),
-    TEL_FAVORITOS_500(INTERNAL_SERVER_ERROR, INTERNAL_SERVER_ERROR.name(), "500", "Erro inesperado"),
+    COMERCIO_422(UNPROCESSABLE_ENTITY, UNPROCESSABLE_ENTITY.name(), "422", "Não foi possível processar a solicitação."),
+    COMERCIO_500(INTERNAL_SERVER_ERROR, INTERNAL_SERVER_ERROR.name(), "500", "Erro inesperado"),
     TEL_FAVORITOS_503(SERVICE_UNAVAILABLE, SERVICE_UNAVAILABLE.name(), "503", "Serviço indisponível");
 
     private final HttpStatus codigoRetorno;

@@ -1,5 +1,6 @@
 package com.comercio.comercioEletronico.service;
 
+import com.comercio.comercioEletronico.exceptions.EstoqueException;
 import com.comercio.comercioEletronico.exceptions.IdInvalidoException;
 import com.comercio.comercioEletronico.model.Categoria;
 import com.comercio.comercioEletronico.model.Produto;
@@ -56,6 +57,16 @@ public class ProdutoService implements IProduto {
     public void validarId(Long id) throws IdInvalidoException {
         if (!produtoRepository.existsById(id)) {
             throw new IdInvalidoException("Id não encontrado no banco de dados");
+        }
+    }
+
+    public void controleEstoque(Produto produto, Integer quantidadeItensPedidos) throws EstoqueException {
+        Integer restoEstoque;
+        if(produto.getQuantidadeEstoque() < quantidadeItensPedidos){
+            throw new EstoqueException("Quantidade indisponível em estoque");
+        } else {
+            restoEstoque = produto.getQuantidadeEstoque() - quantidadeItensPedidos;
+            produto.setQuantidadeEstoque(restoEstoque);
         }
     }
 }

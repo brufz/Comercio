@@ -1,6 +1,8 @@
 package com.comercio.comercioEletronico.controller;
 
+import com.comercio.comercioEletronico.exceptions.EstoqueException;
 import com.comercio.comercioEletronico.exceptions.IdInvalidoException;
+import com.comercio.comercioEletronico.exceptions.QuantidadeItensInvalidoException;
 import com.comercio.comercioEletronico.model.Cliente;
 import com.comercio.comercioEletronico.model.Pedido;
 import com.comercio.comercioEletronico.model.dto.ClienteResponseDto;
@@ -37,7 +39,7 @@ public class PedidoController {
     }
 
     @PostMapping
-    public ResponseEntity<PedidoResponseDto> criarPedido(@RequestBody @Valid Pedido pedido){
+    public ResponseEntity<PedidoResponseDto> criarPedido(@RequestBody @Valid Pedido pedido) throws Exception, QuantidadeItensInvalidoException, EstoqueException {
         Pedido novoPedido = pedidoService.criarPedido(pedido);
         PedidoResponseDto response = new PedidoResponseDto("CREATED", novoPedido);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
