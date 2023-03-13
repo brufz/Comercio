@@ -33,5 +33,9 @@ public class Categoria implements Serializable {
     @JsonIgnore
     private List<Produto> produtos;
 
-
+    public Categoria(Long id, String nome, String descricao) {
+        this.id = id;
+        this.nome = nome;
+        this.descricao = descricao;
+    }
 }
